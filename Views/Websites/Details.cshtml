@@ -1,4 +1,4 @@
-﻿@model WebPulse2023.Models.Website
+﻿@model WebPulse2023.ViewModels.WebsiteViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -28,9 +28,79 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Active)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+        <dt class = "col-sm-2">
+            Total Checks
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.UpAmount + Model.DownAmount)
+        </dd>
     </dl>
+</div>
+<div style="max-width: 10rem;">
+    <canvas id="pieChart"></canvas>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var isUpCounts = {
+            true: @Model.UpAmount,
+            false: @Model.DownAmount
+                };
+
+        var total = isUpCounts.true + isUpCounts.false;
+        var upPercentage = (isUpCounts.true / total) * 100;
+        var downPercentage = (isUpCounts.false / total) * 100;
+
+        var pieChartCanvas = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(pieChartCanvas, {
+            type: 'doughnut', // Use doughnut type for a smaller chart
+            data: {
+                labels: ["Uptime", "Downtime"],
+                datasets: [{
+                    data: [upPercentage, downPercentage],
+                    backgroundColor: ['rgba(40, 167, 69, 0.7)', 'rgba(220, 53, 69, 0.7)']
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                        labels: {
+                            color: 'rgb(255, 99, 132)'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.dataset.label || '';
+
+                                if (label) {
+                                    label += ': ';
+                                }
+
+                                if (context.parsed !== null) {
+                                    // Convert the value to a percentage
+                                    const percentage = context.parsed;
+                                    label += percentage.toFixed(1) + '%';
+                                }
+
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

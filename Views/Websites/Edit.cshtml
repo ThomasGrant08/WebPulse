@@ -1,4 +1,4 @@
-﻿@model WebPulse2023.Models.Website
+﻿@model WebPulse2023.ViewModels.WebsiteEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -40,5 +40,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

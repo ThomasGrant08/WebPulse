@@ -1,0 +1,109 @@
+﻿@model List<Website>
+    <h1>Status Dashboard</h1>
+    <div class="row">
+        <div class="d-flex">
+            <div class="w-100">
+                <div class="row">
+                    @foreach (var website in Model)
+                    {
+
+                        <div class="col-sm-4">
+                            <div class="card" data-website="@website.Name">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <a asp-area="" asp-controller="Websites" asp-action="Details" asp-route-id="@website.Id">
+                                            <h4>@website.Name</h4>
+                                        </a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="dot" title="No Info Yet">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <span>Last Checked: </span><span class="timestamp"></span>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-sm-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section Scripts {
+    <script>
+        function GetDotClass(isUp, responseTime) {
+            if (responseTime > 1000) {
+                return 'dot dot-warning';
+            }
+            return isUp ? 'dot dot-ok' : 'dot dot-danger';
+        }
+
+        function GetDotTitle(isUp, responseTime, statusCode) {
+            if (isUp) {
+                return responseTime + ' ms';
+            } else {
+                return 'Status Code: ' + statusCode;
+            }
+
+        }
+
+
+        $(document).ready(function () {
+            // Function to update website statuses
+            function updateWebsiteStatuses() {
+                $.ajax({
+                    url: '/api/WebPings', // Change the API endpoint URL as needed
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        UserID: "@ViewBag.UserID"
+                    },
+                    success: function (pingInfoList) {
+                        pingInfoList.forEach(pingInfo => {
+                            const siteContainer = $(`[data-website="${pingInfo.websiteName}"]`);
+                            if (siteContainer.length > 0) {
+                                const dot = siteContainer.find(".dot");
+                                const responseTime = siteContainer.find(".timestamp");
+                                
+                                dot.removeClass("dot-ok dot-danger dot-warning").addClass(GetDotClass(pingInfo.isUp, pingInfo.responseTime));
+                                dot.attr("title", GetDotTitle(pingInfo.isUp, pingInfo.responseTime, pingInfo.statusCode));
+
+
+                                const timestamp = new Date(pingInfo.timestamp);
+                                const formattedTimestamp = timestamp.toLocaleString("en-US", {
+                                    hour12: false, // 24-hour format
+                                    year: "numeric",
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit"
+                                });
+
+                                responseTime.text(formattedTimestamp);
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error updating website statuses:', error);
+                    }
+                });
+            }
+
+            // Call the function immediately and then every 30 seconds
+            updateWebsiteStatuses();
+            setInterval(updateWebsiteStatuses, 30000); // 30 seconds
+        });
+
+
+    </script>
+}
+

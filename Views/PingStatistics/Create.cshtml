@@ -1,0 +1,52 @@
+﻿@model WebPulse2023.Models.PingStatistic
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>PingStatistic</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="WebsiteId" class="control-label"></label>
+                <select asp-for="WebsiteId" class ="form-control" asp-items="ViewBag.WebsiteId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Interval" class="control-label"></label>
+                <select asp-for="Interval" class="form-control"></select>
+                <span asp-validation-for="Interval" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Timestamp" class="control-label"></label>
+                <input asp-for="Timestamp" class="form-control" />
+                <span asp-validation-for="Timestamp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpCount" class="control-label"></label>
+                <input asp-for="UpCount" class="form-control" />
+                <span asp-validation-for="UpCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DownCount" class="control-label"></label>
+                <input asp-for="DownCount" class="form-control" />
+                <span asp-validation-for="DownCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

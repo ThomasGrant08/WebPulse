@@ -1,0 +1,27 @@
+﻿@model List<WebPing>
+
+<h2>WebPings</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Website</th>
+            <th>Timestamp</th>
+            <th>IsUp</th>
+            <th>ResponseTime</th>
+            <th>StatusCode</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var webPing in Model)
+        {
+            <tr>
+                <td>@webPing.Website.Url</td>
+                <td>@webPing.Timestamp</td>
+                <td>@webPing.isUp</td>
+                <td>@webPing.ResponseTime</td>
+                <td>@webPing.StatusCode</td>
+            </tr>
+        }
+    </tbody>
+</table>

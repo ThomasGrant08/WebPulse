@@ -1,0 +1,22 @@
+.dot {
+    display: inline-block;
+    width: 2rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    vertical-align: middle;
+    transform: translateY(-25%);
+    background-color: var(--bs-gray);
+    box-shadow: 0 0 0.5rem var(--bs-gray) inset;
+}
+
+.dot-danger {
+    background-color: var(--bs-danger);
+}
+
+.dot-ok {
+    background-color: var(--bs-success);
+}
+
+.dot-warning {
+    background-color: var(--bs-warning);
+}

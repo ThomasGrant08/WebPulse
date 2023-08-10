@@ -11,5 +11,7 @@ namespace WebPulse2023.Data
 		{
 		}
 		public DbSet<WebPulse2023.Models.Website> Website { get; set; } = default!;
+		public DbSet<WebPulse2023.Models.WebPing> WebPing { get; set; } = default!;
+		public DbSet<WebPulse2023.Models.PingStatistic> PingStatistic { get; set; } = default!;
 	}
 }
