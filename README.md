@@ -20,7 +20,7 @@ development is to be done in separate forks and not directly on the main reposit
 ## Development Flow
 1. Create an [issue](../../issues) in main repo explaining what you are working on to keep track of the bug/feature on Github.
 2. While creating an issue, prefix the title with `[BUG] ` or `[FEATURE] ` appropriately and assign yourself to the issue.
-3. Write code in the `develop` branch of your cloned repo. For any kind of database changes, use code-first migrations.
+3. Write code in the `main` branch of your cloned repo. For any kind of database changes, use code-first migrations.
 4. Test locally
 5. Push changes to your forked repo's develop branch. (Respect .gitignore and do not push unnecessary built executables, binaries and Web.config file that replaces the connection string)
 6. Create pull request across forked repo and main repo's develop branch.
@@ -31,11 +31,11 @@ development is to be done in separate forks and not directly on the main reposit
 The main repo must not allow direct code changes. Each change must be reviewed and approved by an approver.
 
 ## Approval Process
-1. Clone and checkout the developer's `develop` branch on his repo. Test locally and on staging.
+1. Clone and checkout the developer's `main` branch on his repo. Test locally and on staging.
 2. If it is working fine check for the conflicts in the pull request.
 3. If the patch is not working, ask requester to fix the patch and do not accept the pull request.
 4. If there are conflicts, tell the requester to fix the conflicts and do not accept the pull request.
-5. If everything is fine, merge to `develop` branch.
+5. If everything is fine, merge to `main` branch.
 
 ## Deploying on live
 Once the code is working locally and on staging, it should be ready to be released. 
