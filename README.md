@@ -13,7 +13,7 @@ development is to be done in separate forks and not directly on the main reposit
 
 ## First time development setup
 1. [Create a fork](../../fork)
-2. Clone the repo you forked and do changes in `develop` branch only.
+2. Clone the repo you forked and do changes in `main` branch only.
 3. Replace database connection string in Web.config file to your own database.
 4. Use `Update-Database` to migrate and seed the database. 
 
