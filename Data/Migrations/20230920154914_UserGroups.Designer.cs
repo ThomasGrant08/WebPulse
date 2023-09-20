@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebPulse2023.Data;
 
@@ -11,9 +12,11 @@ using WebPulse2023.Data;
 namespace WebPulse2023.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230920154914_UserGroups")]
+    partial class UserGroups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -267,9 +270,6 @@ namespace WebPulse2023.Data.Migrations
                     b.Property<bool>("CanRead")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("CanShare")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("CanUpdate")
                         .HasColumnType("bit");
 
@@ -284,8 +284,9 @@ namespace WebPulse2023.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Resource")
-                        .HasColumnType("int");
+                    b.Property<string>("Resource")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -345,9 +346,6 @@ namespace WebPulse2023.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
@@ -359,8 +357,6 @@ namespace WebPulse2023.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
 
                     b.ToTable("Role");
                 });
@@ -498,17 +494,6 @@ namespace WebPulse2023.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Website");
-                });
-
-            modelBuilder.Entity("WebPulse2023.Models.Role", b =>
-                {
-                    b.HasOne("WebPulse2023.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("WebPulse2023.Models.WebPing", b =>

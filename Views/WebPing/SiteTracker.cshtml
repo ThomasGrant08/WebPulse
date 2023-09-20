@@ -1,41 +1,46 @@
 ﻿@model List<Website>
-    <h1>Status Dashboard</h1>
-    <div class="row">
-        <div class="d-flex">
-            <div class="w-100">
-                <div class="row">
-                    @foreach (var website in Model)
-                    {
+<h1>Status Dashboard</h1>
+<div class="row">
+    <div class="d-flex">
+        <div class="w-100">
+            <div class="row">
+                @foreach (var website in Model)
+                {
 
-                        <div class="col-sm-4">
-                            <div class="card" data-website="@website.Name">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <a asp-area="" asp-controller="Websites" asp-action="Details" asp-route-id="@website.Id">
-                                            <h4>@website.Name</h4>
+                    <div class="col-sm-4">
+                        <div class="card" data-website="@website.Name">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col mt-0">
+                                        <a asp-area="" asp-controller="Websites" asp-action="Details" asp-route-id="@website.Id" title="Go To Site Details">
+                                            <h4><strong>@website.Name</strong></h4>
                                         </a>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="dot" title="No Info Yet">
-                                            </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="dot" title="No Info Yet">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <span>Last Checked: </span><span class="timestamp"></span>
-                                        </div> 
+                                </div>
+                                <div class="row">
+                                </div>
+                                <div class="row">
+                                    <div class="col mt-0">
+                                        <span>Last Checked: </span><span class="timestamp"></span>
+                                    </div>
+                                    <div class="col mt-0 text-end">
+                                        <a href="@website.Url" target="_blank" title="Go To @website.Name"><image src="https://api.qrserver.com/v1/create-qr-code/?data=@website.Url&size=100x100" /></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    }
-                    <div class="col-sm-6">
                     </div>
+                }
+                <div class="col-sm-6">
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 @section Scripts {
     <script>
@@ -72,7 +77,7 @@
                             if (siteContainer.length > 0) {
                                 const dot = siteContainer.find(".dot");
                                 const responseTime = siteContainer.find(".timestamp");
-                                
+
                                 dot.removeClass("dot-ok dot-danger dot-warning").addClass(GetDotClass(pingInfo.isUp, pingInfo.responseTime));
                                 dot.attr("title", GetDotTitle(pingInfo.isUp, pingInfo.responseTime, pingInfo.statusCode));
 
